@@ -1,15 +1,32 @@
-const getProducts=async()=>{
+
+const getCategories = async () => {
     const response = await axios.get(
-        "https://dummyjson.com/products?limit=10"
+        "https://dummyjson.com/products/category-list"
     );
-    
-return response.data.products
+    return response.data;
 }
 
-const displyProducts = async()=>{
-    const products = await getProducts();
-    console.log(products);
-    const result = products.map((product)=>{
+const displyCategories = async () => {
+    const categories = await getCategories();
+    const result = categories.map((category)=>{
+        return `<li>
+        <a class="dropdown-item text-capitalize" href="#"
+        onclick="getProducts('${category.slug}')">
+        ${category}
+        </a>
+        </li>`
+    }).join("");
+    document.querySelector(".dropdown-menu").innerHTML = result;
+}
+displyCategories();
+
+const getProducts = async (category) => {
+    const response = await axios.get(
+        "https://dummyjson.com/products/category/${category}?limit=10"
+    );
+    const products = response.data.products;
+console.log(products);
+    const result = products.map((product) => {
 
         return `<div class="col">
         <div class="card h-100">
@@ -25,5 +42,5 @@ const displyProducts = async()=>{
         </div>`;
     }).join("");
     document.querySelector(".products .row").innerHTML = result;
-    }
-displyProducts();
+}
+getProducts();
