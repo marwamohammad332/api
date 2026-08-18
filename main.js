@@ -10,13 +10,14 @@ const displyCategories = async () => {
     const categories = await getCategories();
     const result = categories.map((category)=>{
         return `<li>
-        <a class="dropdown-item text-capitalize" href="#"
+        <a class="dropdown-item text-capitalize" href="#category"
         onclick="getProducts('${category}')">
         ${category}
         </a>
         </li>`
     }).join("");
     document.querySelector(".dropdown-menu").innerHTML = result;
+    document.getElementById("section-dropdown-menu").innerHTML = result;
 }
 displyCategories();
 
@@ -44,3 +45,30 @@ console.log(products);
     }).join("");
     document.querySelector(".products .row").innerHTML = result;
 }
+
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  speed:2000,
+
+  autoplay: {
+    delay:2500,
+    disableOnInteraction: true,
+  },
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
